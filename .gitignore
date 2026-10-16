@@ -21,6 +21,7 @@ sdist/
 var/
 wheels/
 share/python-wheels/
+# Python 构建产物
 *.egg-info/
 .installed.cfg
 *.egg
@@ -161,3 +162,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .langgraph_api/
+/tests/test_funcs/
