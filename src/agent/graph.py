@@ -74,7 +74,7 @@ class State:
     # ================ 流程状态 ================
     file_path: Optional[str] = None  # 被测函数所在路径
     func_metadata_list: Optional[List[Dict[str, Any]]] = None  # 函数元数据列表
-    imports: Optional[List[str]] = None  # 被测函数中的import语句列表
+    imports: Optional[List[str]] = field(default_factory=list)  # 被测函数中的import语句列表
     unit_test_response: Optional[Dict[str, Any]] = None  # 单元测试响应字典
     unit_test_save_path: Optional[str] = None  # 单元测试保存路径
     test_output: Optional[Dict[str, Any]] = None  # 测试函数输出

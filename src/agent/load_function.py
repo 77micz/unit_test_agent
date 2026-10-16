@@ -90,13 +90,6 @@ def load_funcs(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
     ]
 
-    # 获取所有顶层import语句
-    imports = [
-        node
-        for node in tree.body
-        if isinstance(node, (ast.Import, ast.ImportFrom))
-    ]
-
     if len(func_names) == 0:
         raise ValueError(
             f"期望文件中至少有一个顶层函数，实际找到 {len(func_names)} 个"
@@ -214,14 +207,14 @@ def extract_metadata(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
     return {"func_metadata_list": func_metadata_list}
 
 
-def transport_metadata(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
+def transport_data(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
     """
     将函数元数据传输给主图
     :param state: 图状态
     :param runtime: 运行时环境
     :return: 函数元数据字典
     """
-    return {"func_metadata_list": state.func_metadata_list, "index": 0}
+    return {"func_metadata_list": state.func_metadata_list, "index": 0, "imports": state.imports}
 
 
 # ============================ 定义图 ============================
@@ -230,11 +223,13 @@ def transport_metadata(state: State, runtime: Runtime[Context]) -> Dict[str, Any
 load_funcs_graph = (
     StateGraph(State, context_schema=Context)
     .add_node("load_funcs", load_funcs)
+    .add_node("extract_imports", extract_imports)
     .add_node("extract_metadata", extract_metadata)
-    .add_node("transport_metadata", transport_metadata)
+    .add_node("transport_data", transport_data)
     .add_edge("__start__", "load_funcs")
-    .add_edge("load_funcs", "extract_metadata")
-    .add_edge("extract_metadata", "transport_metadata")
-    .add_edge("transport_metadata", "__end__")
+    .add_edge("load_funcs", "extract_imports")
+    .add_edge("extract_imports", "extract_metadata")
+    .add_edge("extract_metadata", "transport_data")
+    .add_edge("transport_data", "__end__")
     .compile(name="Load Functions Graph")
 )
