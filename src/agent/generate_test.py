@@ -16,7 +16,7 @@ from langgraph.runtime import Runtime
 from loguru import logger
 from typing_extensions import Annotated
 
-from src.model.models import model_dict
+from model.models import model_dict
 
 
 # ================================ 定义llm响应结构 ================================
@@ -53,8 +53,9 @@ class State:
     See: https://langchain-ai.github.io/langgraph/concepts/low_level/#state
     """
 
-    # ================ 流程状态 ================
+    # ================ 输入 ================
     func_metadata: Optional[Dict[str, Any]] = None  # json格式函数元数据
+    # ================ 输出 ================
     unit_test_response: Optional[Dict[str, Any]] = None # 单元测试响应字典
 
     # ================ 模型状态 ================

@@ -20,7 +20,7 @@ from langgraph.runtime import Runtime
 from loguru import logger
 import shutil
 import re
-from src.model.models import model_dict
+from model.models import model_dict
 import json
 import uuid
 
@@ -54,11 +54,14 @@ class State:
     See: https://langchain-ai.github.io/langgraph/concepts/low_level/#state
     """
 
-    # ================ 流程状态 ================
+    # ================ 输入 ================
     func_metadata: Optional[Dict[str, Any]] = None  # json格式函数元数据
     imports: Optional[List[str]] = None  # 被测函数中的import语句列表
     unit_test_response: Optional[Dict[str, Any]] = None  # 单元测试响应字典
+    # ================ 中间结果 ================
     dependencies: Optional[List[str]] = None  # 第三方依赖列表
+
+    # ================== 输出 ==================
     test_output: Optional[Dict[str, Any]] = None  # 测试函数输出
     test_result: Optional[bool] = None  # 测试结果, 是否通过
 

@@ -61,9 +61,11 @@ class State:
     See: https://langchain-ai.github.io/langgraph/concepts/low_level/#state
     """
 
-    # ================ 流程状态 ================
+    # ================ 输入 ================
     file_path: Optional[str] = None  # 被测函数所在路径
+    # ================ 中间结果 ================
     func_list: Optional[List[Callable]] = None  # 函数列表
+    # ================ 输出 ================
     imports: Optional[List[str]] = field(default_factory=list)  # 被测函数中的import语句列表
     index: Optional[int] = None  # 测试函数索引
     func_metadata_list: Optional[List[Dict[str, Any]]] = None  # 函数元数据列表

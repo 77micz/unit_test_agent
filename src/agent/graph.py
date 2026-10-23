@@ -17,7 +17,7 @@ from langgraph.graph import StateGraph
 from langgraph.runtime import Runtime
 from langgraph.graph.message import add_messages
 from dotenv import load_dotenv
-from src.model.models import model_list
+from model.models import model_list
 # 导入子图
 from src.agent.generate_test import generate_unit_test_graph
 from src.agent.unit_test_save import unit_test_save_graph

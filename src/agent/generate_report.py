@@ -15,7 +15,7 @@ from typing_extensions import Annotated
 from langgraph.graph.message import add_messages
 from loguru import logger
 import json
-from src.model.models import model_dict
+from model.models import model_dict
 
 
 
@@ -49,14 +49,15 @@ class State:
     See: https://langchain-ai.github.io/langgraph/concepts/low_level/#state
     """
 
-    # ================ 流程状态 ================
+    # ================ 输入 ================
     func_metadata: Optional[Dict[str, Any]] = None # json格式函数元数据
     unit_test_str: Optional[str] = None # 单元测试字符串
     test_output: Optional[Dict[str, Any]] = None # 测试函数输出
     test_result: Optional[bool] = None # 测试结果, 是否通过
+    # ================ 输出 ================
     test_report: Optional[str] = None # 测试报告
 
-    # ================ 测试函数状态 ================
+    # ================ 需要处理并返回的输入 ================
     index: Optional[int] = None  # 测试函数索引
 
     # ================ 模型状态 ================
